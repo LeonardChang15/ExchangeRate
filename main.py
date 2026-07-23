@@ -44,8 +44,9 @@ def fetch_rates_from_providers(base: str):
                 data = res.json()
                 # 兼容不同第三方 API 的 key 格式
                 rates = data.get("rates") or data.get(base.lower())
-                if rates:
-                    return rates
+                if rates and isinstance(rates, dict):
+                    unified_rates = {k.upper(): v for k, v in rates.items()}
+                    return unified_rates
         except Exception:
             continue
     return None
