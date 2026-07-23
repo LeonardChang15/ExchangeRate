@@ -45,8 +45,17 @@ def fetch_rates_from_providers(base: str):
                 # 兼容不同第三方 API 的 key 格式
                 rates = data.get("rates") or data.get(base.lower())
                 if rates and isinstance(rates, dict):
-                    unified_rates = {k.upper(): v for k, v in rates.items()}
-                    return unified_rates
+                    # 統一把 Key 轉大寫
+                    formatted_rates = {k.upper(): v for k, v in rates.items()}
+
+                    # 💡 關鍵修正：如果第三方 API 沒有真的幫我們換算 base，我們在後台手動幫它換算！
+                    # 確保基底幣別的值一定是 1
+                    if base in formatted_rates and formatted_rates[base] != 1:
+                        base_value = formatted_rates[base]
+                        formatted_rates = {k: round(v / base_value, 6) for k, v in formatted_rates.items()}
+                        formatted_rates[base] = 1.0
+
+                    return formatted_rates
         except Exception:
             continue
     return None
