@@ -105,3 +105,13 @@ def get_rates(base: str = Query("USD", description="請傳入基準幣別，例�
         }
 
     return {"status": "error", "message": "無法取得即時匯率數據"}
+
+@app.get("/api/version")
+def get_version_config():
+    """
+    靜態配置端點（走 CDN 超高速快取）
+    """
+    return {
+        "min_version": "1.0.0",       # 低於此版本強制更新
+        "latest_version": "1.0.0"     # 目前商店最新版
+    }
