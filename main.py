@@ -113,5 +113,4 @@ def get_version_config():
     """
     return {
         "min_version": "1.0.0",       # 低於此版本強制更新
-        "latest_version": "1.0.0"     # 目前商店最新版
     }
