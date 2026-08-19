@@ -112,5 +112,5 @@ def get_version_config():
     靜態配置端點（走 CDN 超高速快取）
     """
     return {
-        "min_version": "1.0.0",       # 低於此版本強制更新
+        "min_version": "2.0.0",       # 低於此版本強制更新
     }
